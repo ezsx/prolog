@@ -60,3 +60,15 @@ grandMas(X):-parent(Z,X),parent(Y,Z),woman(Y),write(Y),nl.
 %14
 grandMaAndDa(X,Y):- parent(X,Z),parent(Z,Y),woman(Y),woman(X),write(yes),nl,fail;parent(Y,Z),parent(Z,X),woman(X),grandMa(Y,X),write(yes),nl,fail.
 grand_pa_and_son(X,Y):-parent(X,Z),parent(Z,Y),man(X),man(Y),write(yes),nl,fail;parent(Y,Z),parent(Z,X),man(Y),man(X),write(yes),nl,fail.
+
+in_list([],_):-fail.
+in_list([X|_],X).
+in_list([_|T],X):-in_list(T,X).
+
+%15
+minU(0,9):-!.
+minU(X,M):-
+	X1 is X div 10,
+	minU(X1,M1),
+	M2 is X mod 10,
+	(M2<M1, M is M2;M is M1). 
