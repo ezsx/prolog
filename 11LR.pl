@@ -57,3 +57,6 @@ wife(X,Y):-woman(X),man(Y),parent(X,Z),parent(Y,Z),write(yes),nl,!.
 %13
 grandMa(X,Y):-parent(X,Z),parent(Z,Y),woman(X),write(yes),nl,!.
 grandMas(X):-parent(Z,X),parent(Y,Z),woman(Y),write(Y),nl.
+%14
+grandMaAndDa(X,Y):- parent(X,Z),parent(Z,Y),woman(Y),woman(X),write(yes),nl,fail;parent(Y,Z),parent(Z,X),woman(X),grandMa(Y,X),write(yes),nl,fail.
+grand_pa_and_son(X,Y):-parent(X,Z),parent(Z,Y),man(X),man(Y),write(yes),nl,fail;parent(Y,Z),parent(Z,X),man(Y),man(X),write(yes),nl,fail.
