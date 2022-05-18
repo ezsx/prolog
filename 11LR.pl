@@ -1,52 +1,52 @@
-man(UmemuroArareo).
-man(TokamiHajuro).
-man(AkamisuTokikuni).
-man(MakitaOkidasu). 
-man(FujisakiNaruromao).
-man(OtomaruManamori).
-man(KogaiFuzen). 
-man(HataroHachidaira).
-man(IgamatsuSadatada).
+man(memuroarareo).
+man(tokamihajuro).
+man(akamisutokikuni).
+man(makitaokidasu). 
+man(fujisakinaruromao).
+man(otomarumanamori).
+man(kogaiFuzen). 
+man(hatarohachidaira).
+man(igamatsusadatada).
 
-woman(KataMachinari).
-woman(NatsumoriMarizuki).
-woman(OgatakeAyameki).
-woman(MinabiraGinatsu).
-woman(UranagiToshitomi).
-woman(HaratakiKise).
-woman(UbugitaMesato).
-woman(OshindoKiramiko).
-woman(AzumuroKosaki).
+woman(katamachinari).
+woman(natsumorimarizuki).
+woman(ogatakeayameki).
+woman(minabiraginatsu).
+woman(uranagitoshitomi).
+woman(haratakikise).
+woman(ubugitamesato).
+woman(oshindokiramiko).
+woman(azumurokosaki).
 
-parent(UmemuroArareo,TokamiHajuro).
-parent(UmemuroArareo,OgatakeAyameki).
-parent(UmemuroArareo,MakitaOkidasu).
-parent(UmemuroArareo,UranagiToshitomi).
+parent(umemuroarareo,tokamihajuro).
+parent(umemuroarareo,ogatakeayameki).
+parent(umemuroarareo,makitaokidasu).
+parent(umemuroarareo,uranagitoshitomi).
 
-parent(KataMachinari,TokamiHajuro).
-parent(KataMachinari,OgatakeAyameki).
-parent(KataMachinari,MakitaOkidasu).
-parent(KataMachinari,UranagiToshitomi).
+parent(katamachinari,tokamihajuro).
+parent(katamachinari,ogatakeayameki).
+parent(katamachinari,makitaokidasu).
+parent(katamachinari,uranagitoshitomi).
 
-parent(TokamiHajuro,OtomaruManamori).
-parent(TokamiHajuro,KogaiFuzen).
-parent(NatsumoriMarizuki,OtomaruManamori).
-parent(NatsumoriMarizuki,KogaiFuzen).
+parent(tokamihajuro,otomarumanamori).
+parent(tokamihajuro,kogaifuzen).
+parent(natsumorimarizuki,otomarumanamori).
+parent(natsumorimarizuki,kogaifuzen).
 
-parent(AkamisuTokikuni,HataroHachidaira).
-parent(AkamisuTokikuni,HaratakiKise).
-parent(OgatakeAyameki,HataroHachidaira).
-parent(OgatakeAyameki,HaratakiKise).
+parent(akamisutokikuni,hatarohachidaira).
+parent(akamisutokikuni,haratakikise).
+parent(ogatakeayameki,hatarohachidaira).
+parent(ogatakeayameki,haratakikise).
 
-parent(MakitaOkidasu,UbugitaMesato).
-parent(MakitaOkidasu,OshindoKiramiko).
-parent(MinabiraGinatsu,UbugitaMesato).
-parent(MinabiraGinatsu,OshindoKiramiko).
+parent(makitaokidasu,ubugitamesato).
+parent(makitaokidasu,oshindokiramiko).
+parent(minabiraginatsu,ubugitamesato).
+parent(minabiraginatsu,oshindokiramiko).
 
-parent(FujisakiNaruromao,AzumuroKosaki).
-parent(FujisakiNaruromao,IgamatsuSadatada).
-parent(UranagiToshitomi,AzumuroKosaki).
-parent(UranagiToshitomi,IgamatsuSadatada).
+parent(fujisakinaruromao,azumurokosaki).
+parent(fujisakinaruromao,igamatsusadatada).
+parent(uranagitoshitomi,azumurokosaki).
+parent(uranagitoshitomi,igamatsusadatada).
 
 %11
 daughter(X):- parent(X,Y),woman(Y),write(Y),nl,fail.
