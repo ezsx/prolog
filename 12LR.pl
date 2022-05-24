@@ -47,3 +47,52 @@ task2(N,A):-
 	sumCifr(N2,AC),
 	AppC is AC,
 	nOD(MaxUd,AppC,A),!.
+
+%13 Найти d, меньшее 1000, 
+%   для которого десятичная дробь 1/d содержит самый длинный период
+
+%делим на 2 пока можем
+
+del2(1,1):-!.
+del2(X,R):- 
+	X1 is X div 2,
+	Os is X mod 2,!,
+	del2(X1,R1),!,
+	(Os = 0,R is R1;R is X),!.
+	
+%делим на 5 пока можем
+del5(5,1):-!.
+del5(4,4):-!.
+del5(3,3):-!.
+del5(2,2):-!.
+del5(1,1):-!.
+del5(X,R):- 
+	X1 is X div 5,
+	Os is X mod 5,
+	del5(X1,R1),!,
+	(Os = 0,R is R1;R is X),!.
+
+%период дроби 1/X
+
+period_CH(X,L):-
+	del2(X,R2),
+	del5(R2,R5),
+	period_CH(R5,L,0,1).
+period_CH(_,G,G,0):-!.
+period_CH(N,L,K,R):-
+	K1 is K + 1,
+	R1 is (R * 10) mod N,
+	R1=\=1,R1=\=0,
+	period_CH(N,L,K1,R1),!;Ka1 is K+1,
+	period_CH(N,L,Ka1,0),!.
+
+%main
+find_period(A):-find_period(A,0,0,1).
+find_period(G,G,_,1000):-!.
+find_period(A,Ch,Ma,Co):- period_CH(Co,Res),
+	Res>Ma,
+	Ma1 is Res,
+	Ch1 is Co,
+	Co1 is Co + 1,!,
+	find_period(A,Ch1,Ma1,Co1);Co2 is Co + 1,
+	find_period(A,Ch,Ma,Co2),!.
