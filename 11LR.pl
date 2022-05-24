@@ -1,52 +1,32 @@
-man(memuroarareo).
-man(tokamihajuro).
-man(akamisutokikuni).
-man(makitaokidasu). 
-man(fujisakinaruromao).
-man(otomarumanamori).
-man(kogaiFuzen). 
-man(hatarohachidaira).
-man(igamatsusadatada).
+man(leo).
+man(max).
+man(matt).
+man(dima).
+man(letto).
+man(tom).
 
-woman(katamachinari).
-woman(natsumorimarizuki).
-woman(ogatakeayameki).
-woman(minabiraginatsu).
-woman(uranagitoshitomi).
-woman(haratakikise).
-woman(ubugitamesato).
-woman(oshindokiramiko).
-woman(azumurokosaki).
+woman(ann).
+woman(elza).
+woman(masha).
+woman(maria).
+woman(kate).
+woman(amanda).
 
-parent(umemuroarareo,tokamihajuro).
-parent(umemuroarareo,ogatakeayameki).
-parent(umemuroarareo,makitaokidasu).
-parent(umemuroarareo,uranagitoshitomi).
+parent(leo,dima).
+parent(ann,dima).
+parent(max,maria).
+parent(max,letto).
+parent(elza,maria).
+parent(elza,letto).
+parent(matt,kate).
+parent(masha,kate).
 
-parent(katamachinari,tokamihajuro).
-parent(katamachinari,ogatakeayameki).
-parent(katamachinari,makitaokidasu).
-parent(katamachinari,uranagitoshitomi).
 
-parent(tokamihajuro,otomarumanamori).
-parent(tokamihajuro,kogaifuzen).
-parent(natsumorimarizuki,otomarumanamori).
-parent(natsumorimarizuki,kogaifuzen).
+parent(letto,amanda).
+parent(kate,amanda).
 
-parent(akamisutokikuni,hatarohachidaira).
-parent(akamisutokikuni,haratakikise).
-parent(ogatakeayameki,hatarohachidaira).
-parent(ogatakeayameki,haratakikise).
-
-parent(makitaokidasu,ubugitamesato).
-parent(makitaokidasu,oshindokiramiko).
-parent(minabiraginatsu,ubugitamesato).
-parent(minabiraginatsu,oshindokiramiko).
-
-parent(fujisakinaruromao,azumurokosaki).
-parent(fujisakinaruromao,igamatsusadatada).
-parent(uranagitoshitomi,azumurokosaki).
-parent(uranagitoshitomi,igamatsusadatada).
+parent(dima,tom).
+parent(maria,tom).
 
 %11
 daughter(X):- parent(X,Y),woman(Y),write(Y),nl,fail.
