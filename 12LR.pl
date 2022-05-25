@@ -210,3 +210,30 @@ task17:-
 	read(N),readL(Lis,N),minELEM(Lis,Emin),
 	find_index(Lis,Emin,In),srez(Lis,0,In-1,Before),srez(Lis,In,N-1,After),
 	append(After,Before,Res),writeL(Res),!.
+
+
+%18(15) является ли элемент по указанному индексу локальным минимумом
+
+localMIN(List,I):-
+	I=:=0, 
+	elem_po_index(List,0,A1),
+	elem_po_index(List,1,A2),
+	A1<A2,write(yes),!;
+	N1 is I - 1, N2 is I + 1,
+	elem_po_index(List,N1,I1),
+	elem_po_index(List,I,I2),
+	elem_po_index(List,N2,I3),
+	I2<I1,I2<I3,write(yes),!;
+	listleng(List,Len),
+	G1 is Len-1, 
+	G2 is Len - 2, 
+	elem_po_index(List,G1,K1),
+	elem_po_index(List,G2,K2),
+	K1<K2,write(yes),!;
+	write(net),!.
+
+%main
+task18:-
+	read(N),
+	readL(Lis,N),
+	read(I),localMIN(Lis,I),!.
