@@ -96,3 +96,14 @@ find_period(A,Ch,Ma,Co):- period_CH(Co,Res),
 	Co1 is Co + 1,!,
 	find_period(A,Ch1,Ma1,Co1);Co2 is Co + 1,
 	find_period(A,Ch,Ma,Co2),!.
+	
+
+%14 получить длину списка
+
+%main
+length1(List, Length):-
+   length1(List, 0, Length).
+length1([], Length, Length):-!.
+length1([_Head|Tail], Buffer, Length):-
+   NewBuffer is Buffer + 1,
+   length1(Tail, NewBuffer, Length).

@@ -28,6 +28,20 @@ parent(kate,amanda).
 parent(dima,tom).
 parent(maria,tom).
 
+% брат жены
+
+
+
+brother(X,Y):-
+  man(X),parent(Z,Y),parent(Z,X).
+
+couple(X,Y) :- 
+	woman(Y),
+	parent(X,Z),
+	parent(Y,Z).
+
+shurin(X,Y) :- couple(X,Z),brother(Y,Z). 
+
 %11
 daughter(X):- parent(X,Y),woman(Y),write(Y),nl,fail.
 daughter(X,Y):-parent(Y,X),woman(X).
