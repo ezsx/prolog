@@ -148,3 +148,26 @@ task15:- read(N),
 	elem_po_index(L,I,Elind),
 	maxELEM(L,Elmax),
 	(Elind =:= Elmax,write(yes);write(net)),!.
+
+
+%16(11) Дан целочисленный массив, в котором лишь один элемент отличается от остальных. 
+%       Необходимо найти значение этого элемента.
+
+% сколько раз встретится элемент в списке
+
+freq(L,El,F):- freq(L,El,F,0).
+freq([],_,G,G):-!.
+freq([H|T],El,F,C):-
+	H=:=El,
+	C1 is C + 1,!,
+	freq(T,El,F,C1); freq(T,El,F,C),!.
+
+otl_ELEM(L,I):-otl_ELEM(L,L,I,0).
+otl_ELEM([],_,K,K):-!.
+otl_ELEM([H|T],L,Y,Z):-freq(L,H,R),R =:= 1,!,otl_ELEM(T,L,Y,H);otl_ELEM(T,L,Y,Z),!.
+
+%main
+task16:- 
+	read(N),
+	readL(L,N),
+	otl_ELEM(L,I), write(I),!.
