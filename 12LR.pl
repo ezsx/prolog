@@ -237,3 +237,17 @@ task18:-
 	read(N),
 	readL(Lis,N),
 	read(I),localMIN(Lis,I),!.
+
+
+%19(27) Дан целочисленный массив. 
+%       Необходимо осуществить циклический сдвиг элементов массива влево на одну позицию.
+
+task19:- read(N),
+	readL(List,N),
+	srez(List,0,0,Head),
+	listleng(List,Len),
+	Lk is Len - 1,
+	srez(List,1,Lk,Tail),
+	append(Tail,Head,Tailhead),
+	writeL(Tailhead).
+
