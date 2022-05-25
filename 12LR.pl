@@ -107,3 +107,44 @@ length1([], Length, Length):-!.
 length1([_Head|Tail], Buffer, Length):-
    NewBuffer is Buffer + 1,
    length1(Tail, NewBuffer, Length).
+   
+%15 - 20  (3, 11, 13, 15, 27, 30)
+
+
+readL(X,Y):-readL([],X,0,Y).
+readL(A,A,G,G):-!.
+readL(A,B,C,D):- C1 is C+1,
+	read(X),
+	append(A,[X],A1),
+	readL(A1,B,C1,D).
+
+writeL([]):-!.
+writeL([H|T]):- 
+	write(H),
+	write(' '),
+	writeL(T).
+
+% 15(3) Дан целочисленный массив и натуральный индекс (число, меньшее размера массива). 
+% Необходимо определить является ли элемент по указанному индексу глобальным максимумом.
+
+% индекс с нуля
+elem_po_index(L,I,El):-elem_po_index(L,I,El,0).
+elem_po_index([H|_],K,H,K):-!.
+elem_po_index([_|Tail],I,El,Cou):- 
+	I =:= Cou,
+	elem_po_index(Tail,Cou,El,Cou); Cou1 is Cou + 1,
+	elem_po_index(Tail,I,El,Cou1).
+
+maxELEM(L,El):-maxELEM(L,[],-999,El).
+maxELEM([],_,M,M):-!.
+maxELEM([H|T],X,Mx,El):-H>Mx,!,
+	append(X,T,List1),
+	maxELEM(T,List1,H,El);append(X,T,List2),!,
+	maxELEM(T,List2,Mx,El).
+
+task15:- read(N),
+	readL(L,N),
+	read(I),
+	elem_po_index(L,I,Elind),
+	maxELEM(L,Elmax),
+	(Elind =:= Elmax,write(yes);write(net)),!.
