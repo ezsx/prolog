@@ -171,3 +171,42 @@ task16:-
 	read(N),
 	readL(L,N),
 	otl_ELEM(L,I), write(I),!.
+
+%17(13)Дан целочисленный массив. Необходимо разместить элементы, 
+%      расположенные до минимального, в конце массива.
+
+minELEM(L,El):-minELEM(L,[],999,El).
+minELEM([],_,M,M):-!.
+minELEM([H|T],X,Mx,El):-H<Mx,!,
+	append(X,T,List1),
+	minELEM(T,List1,H,El);append(X,T,List2),!,
+	minELEM(T,List2,Mx,El).
+
+find_index(L,El,I):-find_index(L,El,I,0).
+find_index([],_,G,G):-!.
+find_index([H|T],El,I,C):- H=\=El,
+	C1 is C + 1,!,
+	find_index(T,El,I,C1);find_index([],El,I,C),!.
+
+% срезаем список - элементы с индексами I1 и I2 включительно. Индекс с 0.
+srez(L,I1,I2,R):-srez(L,I1,I2,R,-1,[]).
+
+srez(_,_,O2,Res,O2,Res):-!.
+
+srez([_|T],I1,I2,R,Ci,Lis):- Curi is Ci + 1,
+	Curi<I1,!,
+	srez(T,I1,I2,R,Curi,Lis). %до I1
+	
+srez([_|_],I1,I2,R,Ci,Lis):- Curi is Ci + 1,
+	Curi>I2,!,
+	srez([],I1,Curi,R,Curi,Lis).%после I2
+	
+srez([H|T],I1,I2,R,Ci,Lis):- Curi is Ci + 1,
+	append(Lis,[H],List),!,
+	srez(T,I1,I2,R,Curi,List).%между I1 и I2
+
+%main
+task17:-
+	read(N),readL(Lis,N),minELEM(Lis,Emin),
+	find_index(Lis,Emin,In),srez(Lis,0,In-1,Before),srez(Lis,In,N-1,After),
+	append(After,Before,Res),writeL(Res),!.
