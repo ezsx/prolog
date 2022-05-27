@@ -205,22 +205,43 @@ write(Hum),!.
 кет занял первое место. Кто является австралийцем? Каким спортом увлека-
 ется Ричард?*/
 
-task19:- Atletas = [_,_,_],
-inlist(Atletas,[maikl,_,baloncesto,_]),
-inlist(Atletas,[saimon,israeli,_,_]),
-inlist(Atletas,[_,_,cricket,primero]),
-inlist(Atletas,[richard,_,_,_]),
-inlist(Atletas,[_,_,tenis,_]),
-inlist(Atletas,[_,americano,_,_]),
-inlist(Atletas,[_,australiano,_,_]),
-inlist(Atletas,[_,_,_,segundo]),
-inlist(Atletas,[_,_,_,tercero]),
-not(inlist(Atletas,[maikl,americano,_,_])),
-not(inlist(Atletas,[saimon,_,tenis,_])),
+task19:- Atl = [_,_,_],
+inL(Atl,[maikl,_,baloncesto,_]),
+inL(Atl,[saimon,israeli,_,_]),
+inL(Atl,[_,_,cricket,primero]),
+inL(Atl,[richard,_,_,_]),
+inL(Atl,[_,_,tenis,_]),
+inL(Atl,[_,americano,_,_]),
+inL(Atl,[_,australiano,_,_]),
+inL(Atl,[_,_,_,segundo]),
+inL(Atl,[_,_,_,tercero]),
+not(inL(Atl,[maikl,americano,_,_])),
+not(inL(Atl,[saimon,_,tenis,_])),
 
-inlist(Atletas,[Who1,australiano,_,_]),
-inlist(Atletas,[richard,_,Who2,_]),
-write('El australiano es '),write(Who1),nl,write('Richard es aficionado al '),write(Who2),!.
+inL(Atl,[Who1,australiano,_,_]),
+inL(Atl,[richard,_,Who2,_]),
+write(' astral '),write(Who1),nl,write(' richard '),write(Who2),!.
+
+/*
+%20. Вариант 3 Три друга – Петр, Роман и Сергей учатся на математическом,
+физическом и химическом факультетах университета. Если Петр математик,
+то Сергей не физик. Если Роман не физик, то Петр – математик. Если Сергей
+не математик, то Роман – химик. Где учится Роман?
+
+*/
+task20:- Chels = [_,_,_],
+%inL(Chels,[pyotr,roman,sergey,matem,fisica,quimia]),
+inL(Chels,[pyotr,_]),
+inL(Chels,[roman,_]),
+inL(Chels,[sergey,_]),
+inL(Chels,[_,matem]),
+inL(Chels,[_,fisica]),
+inL(Chels,[_,quimia]),
+(not(inL(Chels,[pyotr,matem]));inL(Chels,[sergey,fisica])),
+((inL(Chels,[roman,fisica]));(inL(Chels,[pyotr,matem]))),
+((inL(Chels,[sergey,matem]));inL(Chels,[roman,fisica])),
+inL(Chels,[roman,Who1]),
+write(Chels),nl,write('roman lee '),write(Who1),!.
 
 
 
