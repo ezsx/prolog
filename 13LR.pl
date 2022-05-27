@@ -55,3 +55,19 @@ sumL([H|T],A,B,S,Sum):-
 	sumL(T,A,B,S,Sum).
 
 task12:- read(N),readlist(L,N),read(A),read(B),sumL(L,A,B,Sum),write(Sum).
+
+%13(51) Для введенного списка построить два списка L1 и L2, где элементы L1 это неповторяющиеся элементы исходного списка, а элемент списка L2 с номером i показывает, сколько раз элемент списка L1 с таким номером повторяется в исходном.
+
+notin([],[]):- !.
+notin([H|T],L):-notin([H|T],L,[]).
+notin([],Lis,Lis):-!.
+notin([H|T],List,[]):-notin(T,List,[H]),!.
+notin([H|T],List,List1):-not(contains(List1,H)),append(List1,[H],List2),notin(T,List,List2),!.
+notin([_|T],List,List1):-notin(T,List,List1).
+
+p_p(Common,Uniq,Res):-p_p(Common,Uniq,Res,[]).
+p_p(_,[],R,R):-!.
+p_p(Common,[H|T],Res,Acc):-frequency(Common,H,F),F1 is F,append(Acc,[F1],Acc1),p_p(Common,T,Res,Acc1).
+
+task13:- read(N),readlist(L,N),notin(L,Uniq),p_p(L,Uniq,Res),writelist(L),nl,writelist(Uniq),nl,writelist(Res),!. 
+
