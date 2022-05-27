@@ -46,7 +46,7 @@ chnch([H|T],In,Le,Ch,Nch):-
 task11:- read(N),readlist(L,N),chnch(L),!.
 
 %12(45) Дан целочисленный массив и интервал a..b. 
-Необходимо найти сумму элементов, значение которых попадает в этот интервал.
+%Необходимо найти сумму элементов, значение которых попадает в этот интервал.
 
 sumL(List,A,B,Sum):-sumL(List,A,B,0,Sum).
 sumL([],_,_,Su,Su):-!.
@@ -58,9 +58,9 @@ sumL([H|T],A,B,S,Sum):-
 task12:- read(N),readlist(L,N),read(A),read(B),sumL(L,A,B,Sum),write(Sum).
 
 %13(51) Для введенного списка построить два списка L1 и L2, 
-где элементы L1 это неповторяющиеся элементы исходного списка,
-а элемент списка L2 с номером i показывает, 
-сколько раз элемент списка L1 с таким номером повторяется в исходном.
+%где элементы L1 это неповторяющиеся элементы исходного списка,
+%а элемент списка L2 с номером i показывает, 
+%сколько раз элемент списка L1 с таким номером повторяется в исходном.
 
 notin([],[]):- !.
 notin([H|T],L):-notin([H|T],L,[]).
@@ -76,8 +76,8 @@ p_p(Common,[H|T],Res,Acc):-frequency(Common,H,F),F1 is F,append(Acc,[F1],Acc1),p
 task13:- read(N),readlist(L,N),notin(L,Uniq),p_p(L,Uniq,Res),writelist(L),nl,writelist(Uniq),nl,writelist(Res),!. 
 
 %Задание 14 Беседует трое друзей: Белокуров, Рыжов, Чернов. Брюнет сказал Белокурову: 
-“Любопытно, что один из нас блондин, другой брюнет, третий - рыжий, но ни у кого цвет волос не соответствует фамилии”.
-Какойцвет волос у каждого из друзей?
+%“Любопытно, что один из нас блондин, другой брюнет, третий - рыжий, но ни у кого цвет волос не соответствует фамилии”.
+%Какойцвет волос у каждого из друзей?
 
 inL([],_):-fail.
 inL([X|_],X).
@@ -96,10 +96,10 @@ not(inL(Hairs,[rizhov,ginger])),
 write(Hairs),!.
 
 %Задание 15 Три подруги вышли в белом,
-зеленом и синем платьях и туфлях. Известно, 
-что только у Ани цвета платья и туфлей совпадали. 
-Ни туфли,ни платье Вали не были белыми. 
-Наташа была в зеленых туфлях. Определить цвета платья и туфель на каждой из подруг.
+%зеленом и синем платьях и туфлях. Известно, 
+%что только у Ани цвета платья и туфлей совпадали. 
+%Ни туфли,ни платье Вали не были белыми. 
+%Наташа была в зеленых туфлях. Определить цвета платья и туфель на каждой из подруг.
 
 task15:- Vertidos=[_,_,_],
 inL(Vertidos,[ann,_,_]),
@@ -132,7 +132,7 @@ inL(Work,[tokar,Who2,_,_,_]),
 inL(Work,[svarshick,Who3,_,_,_]),
 write('slesar = '),write(Who1),nl,write('tokar = '),write(Who2),nl,write('svarshick = '),write(Who3),!.
 
-Задание 17 В бутылке, стакане, кувшине и банке находятся молоко, лимонад, квас и вода. Известно, что вода и молоко не в бутылке, 
+%Задание 17 В бутылке, стакане, кувшине и банке находятся молоко, лимонад, квас и вода. Известно, что вода и молоко не в бутылке, 
 %сосуд с лимонадом находится между кувшином и сосудом с квасом, в банке - не лимонад и не вода. Стакан находится около банки и сосуда с молоком.
 %Как распределены эти жидкости по сосудам.
 
@@ -151,24 +151,25 @@ next(A,B,List):-right(A,B,List).
 next(A,B,List):-left(A,B,List).
 
 task17:- Drinks=[_,_,_,_],
-inlist(Drinks,[bottle,_]),
-inlist(Drinks,[glass,_]),
-inlist(Drinks,[kuvshin,_]),
-inlist(Drinks,[jar,_]),
-inlist(Drinks,[_,leche]),
-inlist(Drinks,[_,lemonade]),
-inlist(Drinks,[_,kvas]),
-inlist(Drinks,[_,agua]),
-not(inlist(Drinks,[bottle,leche])),
-not(inlist(Drinks,[bottle,agua])),
-not(inlist(Drinks,[jar,lemonade])),
-not(inlist(Drinks,[jar,agua])),
+inL(Drinks,[bottle,_]),
+inL(Drinks,[glass,_]),
+inL(Drinks,[kuvshin,_]),
+inL(Drinks,[jar,_]),
+inL(Drinks,[_,leche]),
+inL(Drinks,[_,lemonade]),
+inL(Drinks,[_,kvas]),
+inL(Drinks,[_,agua]),
+not(inL(Drinks,[bottle,leche])),
+not(inL(Drinks,[bottle,agua])),
+not(inL(Drinks,[jar,lemonade])),
+not(inL(Drinks,[jar,agua])),
 right([kuvshin,_],[_,lemonade],Drinks),
 right([_,lemonade],[_,kvas],Drinks),
 next([glass,_],[jar,_],Drinks),
 next([glass,_],[_,leche],Drinks),
 
 write(Drinks),!.
+
 
 
 
