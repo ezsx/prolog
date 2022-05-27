@@ -44,3 +44,14 @@ chnch([H|T],In,Le,Ch,Nch):-
 	chnch(T,In2,Le,Ch,Nch1),!.
 
 task11:- read(N),readlist(L,N),chnch(L),!.
+
+%12(45) Дан целочисленный массив и интервал a..b. Необходимо найти сумму элементов, значение которых попадает в этот интервал.
+
+sumL(List,A,B,Sum):-sumL(List,A,B,0,Sum).
+sumL([],_,_,Su,Su):-!.
+sumL([H|T],A,B,S,Sum):- 
+	H> A,H< B,S1 is S+H,
+	sumL(T,A,B,S1,Sum),!;
+	sumL(T,A,B,S,Sum).
+
+task12:- read(N),readlist(L,N),read(A),read(B),sumL(L,A,B,Sum),write(Sum).
