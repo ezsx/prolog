@@ -3,6 +3,11 @@
 append([],X,X).
 append([X|T],Y,[X|T1]) :- append(T,Y,T1).
 
+listContains([],_):- false, !.
+listContains([Head|_],Head).
+listContains([_|Tail],Number):- listContains(Tail,Number).
+
+
 contains([], _):- !, fail.
 contains([H|_], H):- !.
 contains([_|T], N):- contains(T, N).
@@ -119,6 +124,17 @@ write(Vertidos),!.
 %Задание 16 На заводе работали три друга: слесарь, токарь и сварщик. Их фамилии Борисов, Иванов и Семенов. У слесаря нет ни братьев, ни сестер. Он
 %самый младший из друзей. Семенов, женатый на сестре Борисова, старше токаря. Назвать фамилии слесаря, токаря и сварщика.
 
+% [профессия, фамилия, кол-во сестер, старшинство, жена]
+
+/*
+    Слесарь не Борисов (у борисова сестра, у слесаря нет)
+    Слесарь не Семенов (слесарь самый младший, а Семенов старше токаря)
+    -> Слесарь - Иванов
+    Семенов старше токаря -> Токарь не Семенов
+    -> Токарь - Борисов
+    -> Сварщик - Семенов
+*/
+
 task16:- Work = [_,_,_],
 %inL(Work,[slesar,borisov,kolvo_bratev,vozrast,rodstvennik]),
 inL(Work,[slesar,_,0,0,_]),
@@ -132,43 +148,54 @@ inL(Work,[tokar,Who2,_,_,_]),
 inL(Work,[svarshick,Who3,_,_,_]),
 write('slesar = '),write(Who1),nl,write('tokar = '),write(Who2),nl,write('svarshick = '),write(Who3),!.
 
-%Задание 17 В бутылке, стакане, кувшине и банке находятся молоко, лимонад, квас и вода. Известно, что вода и молоко не в бутылке, 
-%сосуд с лимонадом находится между кувшином и сосудом с квасом, в банке - не лимонад и не вода. Стакан находится около банки и сосуда с молоком.
-%Как распределены эти жидкости по сосудам.
 
-%B справа от A в C
-right(_,_,[_]):-fail.
-right(A,B,[A|[B|_]]).
-right(A,B,[_|List]):-right(A,B,List).
+% В бутылке, стакане, кувшине и банке находятся молоко, ли-
+% монад, квас и вода. Известно, что вода и молоко не в бутылке, сосуд с лимона-
+% дом находится между кувшином и сосудом с квасом, в банке - не лимонад и не
+% вода. Стакан находится около банки и сосуда с молоком. Как распределены
+% эти жидкости по сосудам.
 
-%B слева от A в C
-left(_,_,[_]):-fail.
-left(A,B,[B|[A|_]]).
-left(A,B,[_|List]):-left(A,B,List).
+isOnRight(_, _, [_]):- false, !.
+isOnRight(A, B, [A|[B|_]]).
+isOnRight(A, B, [_|List]):- isOnRight(A,B,List).
 
-%B справаслеваслевасправа(около) A в C
-next(A,B,List):-right(A,B,List).
-next(A,B,List):-left(A,B,List).
+isOnLeft(_, _, [_]):- false, !.
+isOnLeft(A, B, [B|[A|_]]).
+isOnLeft(A, B, [_|List]):- isOnLeft(A,B,List).
 
-task17:- Drinks=[_,_,_,_],
-inL(Drinks,[bottle,_]),
-inL(Drinks,[glass,_]),
-inL(Drinks,[kuvshin,_]),
-inL(Drinks,[jar,_]),
-inL(Drinks,[_,leche]),
-inL(Drinks,[_,lemonade]),
-inL(Drinks,[_,kvas]),
-inL(Drinks,[_,agua]),
-not(inL(Drinks,[bottle,leche])),
-not(inL(Drinks,[bottle,agua])),
-not(inL(Drinks,[jar,lemonade])),
-not(inL(Drinks,[jar,agua])),
-right([kuvshin,_],[_,lemonade],Drinks),
-right([_,lemonade],[_,kvas],Drinks),
-next([glass,_],[jar,_],Drinks),
-next([glass,_],[_,leche],Drinks),
+next(A, B, List):- isOnRight(A, B, List).
+next(A, B, List):- isOnLeft(A, B, List).
 
-write(Drinks),!.
+task17(Result):-
+    Drinks = [_,_,_,_],
+    
+    listContains(Drinks,[bottle, _]),
+    listContains(Drinks,[glass, _]),
+    listContains(Drinks,[ewer, _]),
+    listContains(Drinks,[jar, _]),
+    listContains(Drinks,[_, milk]),
+    listContains(Drinks,[_, lemonade]),
+    listContains(Drinks,[_, kvas]),
+    listContains(Drinks,[_, water]),
+    
+    % Вода и молоко не в бутылке
+    not(listContains(Drinks,[bottle, milk])),
+    not(listContains(Drinks,[bottle, water])),
+    
+    % В банке - не лимонад и не вода
+    not(listContains(Drinks,[jar, lemonade])),
+    not(listContains(Drinks,[jar, water])),
+    
+    % Сосуд с лимонадом находится между кувшином и сосудом с квасом
+    isOnRight([ewer, _], [_, lemonade], Drinks),
+    isOnRight([_, lemonade], [_, kvas], Drinks),
+    
+    % Стакан находится около банки и сосуда с молоком
+    next([glass, _], [jar, _], Drinks),
+    next([glass, _],[_, milk], Drinks),
+    
+    Result = Drinks, !.
+
 
 /*
 Задание 18 Воронов, Павлов, Левицкий и Сахаров – четыре талантли-
@@ -179,23 +206,32 @@ write(Drinks),!.
 биографическую повесть о Сахарове и собирается написать о Воронове. Воро-
 нов никогда не слышал о Левицком. Кто чем занимается?*/
 
-task18:- Hum=[_,_,_,_],
-inL(Hum,[pavlov,_]),
-inL(Hum,[levicki,_]),
-inL(Hum,[saharov,_]),
-inL(Hum,[voronov,_]),
-inL(Hum,[_,balarin]),
-inL(Hum,[_,pinter]),
-inL(Hum,[_,cantante]),
-inL(Hum,[_,escritor]),
-not(inL(Hum,[saharov,escritor])),
-not(inL(Hum,[voronov,escritor])),
-not(inL(Hum,[voronov,cantante])),
-not(inL(Hum,[pavlov,escritor])),
-not(inL(Hum,[pavlov,pinter])),
-not(inL(Hum,[voronov,pinter])),
+task18(Result):-
+    Guys = [_, _, _, _],
+    
+    listContains(Guys, [voronov, _]),
+    listContains(Guys, [pavlov, _]),
+    listContains(Guys, [levizkyi, _]),
+    listContains(Guys, [saharov, _]),
+    listContains(Guys, [_, dancer]),
+    listContains(Guys, [_, artist]),
+    listContains(Guys, [_, singer]),
+    listContains(Guys, [_, writer]),
+    
+    % Певец - не Воронов или Левицкий
+    not(listContains(Guys, [voronov, singer])),
+    not(listContains(Guys, [levizkyi, singer])),
+    
+    % Художник - не Павлов
+    not(listContains(Guys, [pavlov, artist])),
 
-write(Hum),!.
+    % Писатель - не Сахоров, Воронов, Павлов
+    not(listContains(Guys, [saharov, writer])),
+    not(listContains(Guys, [voronov, writer])),
+    not(listContains(Guys, [pavlov, writer])),
+
+    Result = Guys, !.
+
 
 /*
 %Задание 19 Три друга заняли первое, второе, третье места в соревнова-
@@ -204,23 +240,42 @@ write(Hum),!.
 чем американец. Израильтянин Саймон играет лучше теннисиста. Игрок в кри-
 кет занял первое место. Кто является австралийцем? Каким спортом увлека-
 ется Ричард?*/
+task19:-
+    Athletes = [_,_,_],
 
-task19:- Atl = [_,_,_],
-inL(Atl,[maikl,_,baloncesto,_]),
-inL(Atl,[saimon,israeli,_,_]),
-inL(Atl,[_,_,cricket,primero]),
-inL(Atl,[richard,_,_,_]),
-inL(Atl,[_,_,tenis,_]),
-inL(Atl,[_,americano,_,_]),
-inL(Atl,[_,australiano,_,_]),
-inL(Atl,[_,_,_,segundo]),
-inL(Atl,[_,_,_,tercero]),
-not(inL(Atl,[maikl,americano,_,_])),
-not(inL(Atl,[saimon,_,tenis,_])),
+    % [name, nationality, sport, place]
+    
+    % Майкл предпочитает баскетбол
+    listContains(Athletes, [michael, _, basketball, _]),
+    
+    % Саймон - израильтянин
+    listContains(Athletes, [saimon, isrial, _, _]),
 
-inL(Atl,[Who1,australiano,_,_]),
-inL(Atl,[richard,_,Who2,_]),
-write(' astral '),write(Who1),nl,write(' richard '),write(Who2),!.
+    % Игрок в крикет занял первое место
+    listContains(Athletes, [_, _, cricket, first]),
+    
+    listContains(Athletes, [richard, _, _, _]),
+
+    listContains(Athletes, [_, _, tennis, _]),
+    listContains(Athletes, [_, american, _, _]),
+    listContains(Athletes, [_, austrian, _, _]),
+    
+    listContains(Athletes, [_, _, _, second]),
+    listContains(Athletes, [_, _, _, third]),
+
+    % Майкл играет лучше, чем американец
+    not(listContains(Athletes, [michael, american, _, _])),
+    
+    % Саймон играет лучше теннисиста
+    not(listContains(Athletes, [saimon, _, tennis, _])),
+
+    listContains(Athletes, [Austrian, austrian, _, _]),
+    listContains(Athletes, [richard, _, RichardsSport, _]),
+    
+    write('Austrian: '), writeln(Austrian),
+    write('Richards sport is '), writeln(RichardsSport), !.
+
+
 
 /*
 %20. Вариант 3 Три друга – Петр, Роман и Сергей учатся на математическом,
@@ -241,7 +296,7 @@ inL(Chels,[_,quimia]),
 ((inL(Chels,[roman,fisica]));(inL(Chels,[pyotr,matem]))),
 ((inL(Chels,[sergey,matem]));inL(Chels,[roman,fisica])),
 inL(Chels,[roman,Who1]),
-write(Chels),nl,write('roman lee '),write(Who1),!.
+write(Chels),nl,write('roman uchitsa '),write(Who1),!.
 
 
 
