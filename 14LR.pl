@@ -275,3 +275,29 @@ wSMoreA([_|T], Avg) :- wSMoreA(T, Avg), !.
 
 wSMoreA([], _) :- !.
 
+
+% 2.4
+
+task2_4 :- 
+    see('LR14_Files/file3.txt'), 
+    rSList(StringList), 
+    seen, 
+    strListToStr(StringList, BigString), 
+    mostCommonWordList(BigString, Word), 
+    writeString(Word).
+
+
+mostCommonWordList(Words, Ans) :- 
+    mostCommonWord(Words, Words, 0, [], Ans).
+
+
+strListToStr(StrList, Ans) :- 
+    strListToStr(StrList, [], Ans).
+
+strListToStr([H|T], List, Ans) :- 
+    splitString(H, " ", StrWords), 
+    appendString(List, StrWords, NewList),
+    strListToStr(T, NewList, Ans), !.
+
+strListToStr([], Ans, Ans) :- !.
+
