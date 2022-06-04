@@ -350,7 +350,9 @@ writeNoRepeatingWordsStrings([_|T], RepWords) :-
 
 writeNoRepeatingWordsStrings([], _) :- !.
 
-% 3 - 3
+% 3 - 3 Дана строка в которой слова записаны через пробел. Необходимо
+% 		перемешать все слова этой строки в случайном порядке.
+
 
 task3 :- 
     rS(Str, _),
@@ -428,3 +430,22 @@ randomSortList([H|T], CurIndex, MaxIndex, Length, Ans) :-
 
 randomSortList(Ans, _, _, _, Ans).
 
+% 4 - 8 Дана строка в которой записаны слова через пробел. Необходимо
+%		посчитать количество слов с четным количеством символов.
+
+task4 :- 
+    rS(Str, _),
+    splitString(Str, " ", Words),
+    countUnevenWords(Words, 0, Count),
+    write(Count),!.
+
+countUnevenWords([H|T], Count, Ans) :-
+    count(H, Count1),
+    0 is Count1 mod 2,
+    NewCount is Count + 1,
+    countUnevenWords(T, NewCount, Ans).
+
+countUnevenWords([_|T], Count, Ans) :-
+    countUnevenWords(T, Count, Ans).
+
+countUnevenWords([], Ans, Ans).
