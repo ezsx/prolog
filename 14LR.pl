@@ -236,3 +236,42 @@ countStrNoSpace([_|T], Count, Ans) :-
 
 countStrNoSpace([], Ans, Ans) :- !.
 
+% 2.3
+
+task2_3 :- 
+    see('LR14_Files/file2.txt'), 
+    rSList(StringsList), 
+    seen, 
+    count(StringsList, Len), 
+    countCharList(StringsList, "a", Count1), 
+    countCharList(StringsList, "A", Count2), 
+    Count is Count1 + Count2, 
+    Avg is Count / Len, 
+    wSMoreA(StringsList, Avg).
+
+
+
+countCharList(List, Char, Ans) :- 
+    countCharList(List, Char, 0, Ans),!.
+
+countCharList([H|T], Char, Count, Ans) :- 
+    countChar(H, Char, Count1), 
+    NewCount is Count + Count1, 
+    countCharList(T, Char, NewCount, Ans),!.
+
+countCharList([], _, Ans, Ans) :- !.
+
+
+
+wSMoreA([H|T], Avg) :- 
+    countChar(H, "a", Count1), 
+    countChar(H, "A", Count2), 
+    Count is Count1 + Count2, 
+    Count > Avg, 
+    wS(H), nl,
+    wSMoreA(T, Avg),!.
+
+wSMoreA([_|T], Avg) :- wSMoreA(T, Avg), !.
+
+wSMoreA([], _) :- !.
+
