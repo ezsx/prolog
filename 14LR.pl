@@ -49,7 +49,7 @@ wordsCount([H|T], Count):-
 
 % 1.3 Дана строка, определить самое частое слово
 
-task1_3 :- readString(Str, _), mostCommW(Str, X), writeString(X).
+task1_3 :- readString(Str, _), mostCommW(Str, X), wS(X).
 
 
 
@@ -95,3 +95,62 @@ mostCommW(Words, [_|T], CurMaxCnt, CurMaxWord, Ans) :-
     mostCommW(Words, T, CurMaxCnt, CurMaxWord, Ans),!.
 
 mostCommW(_, [], _, Ans, Ans) :-!.
+
+% 1.4
+
+task1_4 :- readString(Str, N), task1_4(Str, N).
+
+subStr([H|T], Start, End, Ans) :- 
+    subStr([H|T], Start, End, 0, [], Ans).
+
+subStr([H|T], Start, End, I, List, Ans) :- 
+    I >= Start, I < End, 
+    appendString(List, [H], NewList), 
+    NewI is I + 1, 
+    subStr(T, Start, End, NewI, NewList, Ans),!.
+
+subStr([_|T], Start, End, I, List, Ans) :- 
+    NewI is I + 1, 
+    subStr(T, Start, End, NewI, List, Ans),!.
+
+subStr([], _, _, _, Ans, Ans) :- !.
+
+wSNTimes(_, 0) :- !. 
+wSNTimes(Str, N) :- 
+    wS(Str), 
+    NewN is N - 1,
+    wSNTimes(Str, NewN),!. 
+
+task1_4(Str, N) :- 
+    N > 5, 
+    subStr(Str, 0, 3, First3), 
+    L3 is N - 3, 
+    subStr(Str, L3, N, Last3), 
+    wS(First3), 
+    write(" "), 
+    wS(Last3),!.
+
+task1_4([H|_], N) :- wSNTimes([H], N).
+
+% 1.5
+
+task1_5 :- 
+    rS(Str, N), 
+    NewN is N - 1, 
+    subStr(Str, NewN, N, [Char|_]), 
+    indChar(Str, Char, Ans), 
+    write(Ans).
+
+indChar(List, X, Ans) :- 
+    indChar(List, X, 0, [], Ans).
+
+indChar([X|T], X, I, List, Ans) :- 
+    appendString(List, [I], NewList), 
+    NewI is I + 1, 
+    indChar(T, X, NewI, NewList, Ans),!.
+
+indChar([_|T], X, I, List, Ans) :- 
+    NewI is I + 1, 
+    indChar(T, X, NewI, List, Ans),!.
+
+indChar([], _, _, Ans, Ans) :- !.
