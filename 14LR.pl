@@ -154,3 +154,45 @@ indChar([_|T], X, I, List, Ans) :-
     indChar(T, X, NewI, List, Ans),!.
 
 indChar([], _, _, Ans, Ans) :- !.
+
+% 2.1
+
+task2_1 :- see('LR14_Files/file1.txt'), rSList(StringsList), seen, maxLengthList(StringsList, MaxLen), write(MaxLen),!.
+
+count([X|T], Ans) :- 
+    count([X|T], 0, Ans).
+
+count([_|T], Count, Ans) :- 
+    NewCount is Count + 1, 
+    count(T, NewCount, Ans), !.
+
+count([], Ans, Ans) :- !.
+
+
+
+rSList(List) :- 
+    readString(A,_,Flag), 
+    rSList([A],List,Flag).
+
+rSList(List,List,1) :- !.
+
+rSList(Cur_list,List,0) :- 
+    readString(A,_,Flag), 
+    (not(A = []), appendString(Cur_list,[A],C_l),
+    rSList(C_l,List,Flag); 
+    rSList(Cur_list,List,Flag)),!.
+
+
+
+maxLengthList(List, Ans) :- 
+    maxLengthList(List, 0, Ans).
+
+maxLengthList([H|T], CurMax, Ans) :- 
+    count(H, NewMax), 
+    NewMax > CurMax, 
+    maxLengthList(T, NewMax, Ans), !.
+
+maxLengthList([_|T], CurMax, Ans) :- 
+    maxLengthList(T, CurMax, Ans), !.
+
+maxLengthList([], Ans, Ans) :- !.
