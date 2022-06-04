@@ -705,6 +705,35 @@ task7Internal :-
     valueByIndex(Word, Pos3, Char3), 
 
     write(Word), nl, fail.
+	
+% 8   Дано множество {a,b,c,d,e,f}. Построить все слова длины 5, в
+%     которых ровно 2 буквы a, остальные буквы не повторяются. Вывод в файл.
+
+task8 :- tell('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/outFile8.txt'), not(task8Internal), told.
+
+task8Internal :-
+
+    Positions = [0,1,2,3,4],
+    Word = [_, _, _, _, _],
+
+    c(Positions, 2, [PosA1, PosA2]),
+
+    valueByIndex(Word, PosA1, a),
+    valueByIndex(Word, PosA2, a),
+
+    inListNoRep(Positions, PosA1, PositionsNoA), 
+    inListNoRep(PositionsNoA, PosA2, [Pos1, Pos2, Pos3]),
+
+    a([b,c,d,e,f], 3, [Char1, Char2, Char3]), 
+
+    valueByIndex(Word, Pos1, Char1),
+    valueByIndex(Word, Pos2, Char2),
+    valueByIndex(Word, Pos3, Char3), 
+
+    write(Word), nl, fail.
+
+
+
 
 
 
