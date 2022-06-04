@@ -30,3 +30,19 @@ appendString([X|T],Y,[X|T1]) :- appendString(T,Y,T1).
 
 wS([]):-!.
 wS([H|T]):-put(H),wS(T).
+
+
+% 1.2
+
+task1_2:- 
+    rS(Str,_), 
+    wordsCount(Str,Count),
+    write(Count).
+
+wordsCount([],Count):-Count is 1,!.
+wordsCount([H|T], Count):-
+	    H is 32,
+		wordsCount(T,N),
+		Count is N+1;
+		wordsCount(T,Count).
+
