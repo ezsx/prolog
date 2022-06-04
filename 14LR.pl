@@ -196,3 +196,43 @@ maxLengthList([_|T], CurMax, Ans) :-
     maxLengthList(T, CurMax, Ans), !.
 
 maxLengthList([], Ans, Ans) :- !.
+
+% 2.2
+
+task2_2 :- 
+    see('LR14_Files/file1.txt'), 
+    readStringList(StringsList), 
+    seen, 
+    countStrNoSpace(StringsList, Count), 
+    write(Count),!.
+
+countChar(Str, Char, Ans) :- 
+    char_code(Char, CharCode), 
+    countChar(Str, CharCode, 0, Ans).
+
+countChar([S|T], Char, Count, Ans) :- 
+    S = Char, 
+    NewCount is Count + 1, 
+    countChar(T, Char, NewCount, Ans),!.
+
+countChar([_|T], Char, Count, Ans) :- 
+    countChar(T, Char, Count, Ans), !.
+
+countChar([], _, Ans, Ans) :- !.
+
+
+
+countStrNoSpace(StringsList, Ans) :- 
+    countStrNoSpace(StringsList, 0, Ans),!.
+
+countStrNoSpace([H|T], Count, Ans) :- 
+    countChar(H, " ", SpaceCount), 
+    SpaceCount is 0, 
+    NewCount is Count + 1, 
+    countStrNoSpace(T, NewCount, Ans),!.
+
+countStrNoSpace([_|T], Count, Ans) :- 
+    countStrNoSpace(T, Count, Ans),!.
+
+countStrNoSpace([], Ans, Ans) :- !.
+
