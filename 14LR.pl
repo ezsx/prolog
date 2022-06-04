@@ -1,4 +1,18 @@
 
+
+
+/*
+1 Дана строка. Вывести ее три раза через запятую и показать количе-
+ство символов в ней.
+2 Дана строка. Найти количество слов.
+3 Дана строка, определить самое частое слово
+4 Дана строка. Вывести первые три символа и последний три символа,
+если длина строки больше 5 Иначе вывести первый символ столько
+раз, какова длина строки.
+5 Дана строка. Показать номера символов, совпадающих с последним
+символом строки.
+*/
+
 % 1.1
 
 task1_1:- 
@@ -154,6 +168,18 @@ indChar([_|T], X, I, List, Ans) :-
     indChar(T, X, NewI, List, Ans),!.
 
 indChar([], _, _, Ans, Ans) :- !.
+
+/*
+1 Дан файл. Прочитать из файла строки и вывести длину наибольшей
+строки.
+2 Дан файл. Определить, сколько в файле строк, не содержащих
+пробелы.
+3 Дан файл, найти и вывести на экран только те строки, в которых букв
+А больше, чем в среднем на строку.
+4 Дан файл, вывести самое частое слово.
+5 Дан файл, вывести в отдельный файл строки, состоящие из слов, не
+повторяющихся в исходном файле.
+*/
 
 % 2.1
 
@@ -450,7 +476,9 @@ countUnevenWords([_|T], Count, Ans) :-
 
 countUnevenWords([], Ans, Ans).
 
-% 5 - 16
+% 5 - 16	Дан массив в котором находятся строки "белый", "синий" и
+%			"красный" в случайном порядке. Необходимо упорядочить массив так,
+%			чтобы получился российский флаг.
 
 task5 :- 
     see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file5.txt'), 
@@ -731,6 +759,39 @@ task8Internal :-
     valueByIndex(Word, Pos3, Char3), 
 
     write(Word), nl, fail.
+	
+% 9	Дано множество {a,b,c,d,e,f}. Построить все слова длины 5, в
+%	которых ровно одна буква повторяется 2 раза, остальные буквы не
+%	повторяются. Вывод в файл.
+
+task9 :- tell('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/outFile9.txt'), not(task9Internal), told.
+
+task9Internal :-
+
+    Positions = [0,1,2,3,4],
+    Word = [_, _, _, _, _],
+
+    c(Positions, 2, [PosRep2Char1, PosRep2Char2]),
+
+    Alphabet = [a,b,c,d,e,f],
+    c(Alphabet, 1, [Rep2Char]),
+
+    valueByIndex(Word, PosRep2Char1, Rep2Char),
+    valueByIndex(Word, PosRep2Char2, Rep2Char),
+
+    inListNoRep(Positions, PosRep2Char1, PositionsNoRep2Char), 
+    inListNoRep(PositionsNoRep2Char, PosRep2Char2, [Pos1, Pos2, Pos3]),
+    inListNoRep(Alphabet, Rep2Char, AlphabetNoRep2Char),
+
+    a(AlphabetNoRep2Char, 3, [Char1, Char2, Char3]), 
+
+    valueByIndex(Word, Pos1, Char1),
+    valueByIndex(Word, Pos2, Char2),
+    valueByIndex(Word, Pos3, Char3),
+
+    write(Word), nl, fail.
+
+
 
 
 
