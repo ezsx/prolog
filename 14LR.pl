@@ -301,3 +301,53 @@ strListToStr([H|T], List, Ans) :-
 
 strListToStr([], Ans, Ans) :- !.
 
+% 2.5
+
+task2_5 :- 
+    see('LR14_Files/file4.txt'), 
+    rSList(StrList), 
+    seen, 
+    strListToStr(StrList, Words), 
+    repeatingWords(Words, RepWords),
+    tell('LR14_Files/outFile2_5.txt'), 
+    writeNoRepeatingWordsStrings(StrList, RepWords), 
+    told. 
+
+
+inList([X|_], X).
+inList([_|T] ,X) :- inList(T, X).
+
+containsList(List, [H|_]) :- inList(List, H), !.
+containsList(List, [_|T]) :- containsList(List, T).
+
+
+
+repeatingWords(Words, Ans) :- 
+    repeatingWords(Words, [], [], Ans).
+
+repeatingWords([H|T], List, RepList, Ans) :- 
+    inList(List, H), 
+    appendString(List, [H], NewList),
+    appendString(RepList, [H], NewRepList),  
+    repeatingWords(T, NewList, NewRepList, Ans),!.
+
+repeatingWords([H|T], List, RepList, Ans) :- 
+    appendString(List, [H], NewList), 
+    repeatingWords(T, NewList, RepList, Ans),!.
+
+repeatingWords([], _, Ans, Ans) :- !.
+
+
+
+writeNoRepeatingWordsStrings([H|T], RepWords) :- 
+    splitString(H, " ", Words), 
+    not(containsList(Words, RepWords)), 
+    writeString(H), nl, 
+    writeNoRepeatingWordsStrings(T, RepWords), !.
+
+writeNoRepeatingWordsStrings([_|T], RepWords) :- 
+    writeNoRepeatingWordsStrings(T, RepWords), !.
+
+writeNoRepeatingWordsStrings([], _) :- !.
+
+
