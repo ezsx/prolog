@@ -157,7 +157,7 @@ indChar([], _, _, Ans, Ans) :- !.
 
 % 2.1
 
-task2_1 :- see('LR14_Files/file1.txt'), rSList(StringsList), seen, maxLengthList(StringsList, MaxLen), write(MaxLen),!.
+task2_1 :- see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file1.txt'), rSList(StringsList), seen, maxLengthList(StringsList, MaxLen), write(MaxLen),!.
 
 count([X|T], Ans) :- 
     count([X|T], 0, Ans).
@@ -200,7 +200,7 @@ maxLengthList([], Ans, Ans) :- !.
 % 2.2
 
 task2_2 :- 
-    see('LR14_Files/file1.txt'), 
+    see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file1.txt'), 
     readStringList(StringsList), 
     seen, 
     countStrNoSpace(StringsList, Count), 
@@ -239,7 +239,7 @@ countStrNoSpace([], Ans, Ans) :- !.
 % 2.3
 
 task2_3 :- 
-    see('LR14_Files/file2.txt'), 
+    see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file2.txt'), 
     rSList(StringsList), 
     seen, 
     count(StringsList, Len), 
@@ -279,7 +279,7 @@ wSMoreA([], _) :- !.
 % 2.4
 
 task2_4 :- 
-    see('LR14_Files/file3.txt'), 
+    see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file3.txt'), 
     rSList(StringList), 
     seen, 
     strListToStr(StringList, BigString), 
@@ -304,12 +304,12 @@ strListToStr([], Ans, Ans) :- !.
 % 2.5
 
 task2_5 :- 
-    see('LR14_Files/file4.txt'), 
+    see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file4.txt'), 
     rSList(StrList), 
     seen, 
     strListToStr(StrList, Words), 
     repeatingWords(Words, RepWords),
-    tell('LR14_Files/outFile2_5.txt'), 
+    tell('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/outFile2_5.txt'), 
     writeNoRepeatingWordsStrings(StrList, RepWords), 
     told. 
 
@@ -449,3 +449,235 @@ countUnevenWords([_|T], Count, Ans) :-
     countUnevenWords(T, Count, Ans).
 
 countUnevenWords([], Ans, Ans).
+
+% 5 - 16
+
+task5 :- 
+    see('C:/Users/scdco/Documents/Prolog/prolog/LR14_Files/file5.txt'), 
+    rS(Str,_), 
+    seen,
+    splitString(Str, " ", Words),
+    ruSort(Words, [], NewWords),
+    wS(NewWords),!.
+
+
+ruSort(OriginList, List, Ans) :-
+    filterW(OriginList, Ans1),
+    filterB(OriginList, Ans2),
+    filterR(OriginList, Ans3),
+    appendString(List, Ans1, List1),
+    appendString(List1, Ans2, List2),
+    appendString(List2, Ans3, List3),
+    equelList(List3, Ans).
+
+equelList(Ans, Ans).
+
+
+filterW([H|T], Ans) :-
+    filterW([H|T], [], Ans),!.
+
+filterW([H|T], List, Ans) :-
+    (filterStr(H, "w", List1),
+    count(List1, Count),
+    Count > 0,
+    appendString(List, H, NewList),
+    appendString(NewList, [32], NewList2),
+    filterW(T, NewList2, Ans));
+    filterW(T, List, Ans).
+
+filterW([], Ans, Ans).
+
+
+
+filterB([H|T], Ans) :-
+    filterB([H|T], [], Ans),!.
+
+filterB([H|T], List, Ans) :-
+    (filterStr(H, "b", List1),
+    count(List1, Count),
+    Count > 0,
+    appendString(List, H, NewList),
+    appendString(NewList, [32], NewList2),
+    filterB(T, NewList2, Ans));
+    filterB(T, List, Ans).
+
+filterB([], Ans, Ans).
+
+
+
+filterR([H|T], Ans) :-
+    filterR([H|T], [], Ans),!.
+
+filterR([H|T], List, Ans) :-
+    (filterStr(H, "r", List1),
+    count(List1, Count),
+    Count > 0,
+    appendString(List, H, NewList),
+    appendString(NewList, [32], NewList2),
+    filterR(T, NewList2, Ans));
+    filterR(T, List, Ans).
+
+filterR([], Ans, Ans).
+
+
+
+filterStr([H|T], Char, Ans):-
+    char_code(Char, Code),
+    filterStr([H|T], Code, [], Ans),!.
+
+filterStr([Char|T], Char, List, Ans) :-
+    appendString(List, [Char], NewList),
+    filterStr(T, Char, NewList, Ans).
+
+filterStr([_|T], Char, List, Ans) :-
+    filterStr(T, Char, List, Ans).
+
+filterStr([], _, Ans, Ans).
+
+
+% 6.1
+
+task6 :- 
+    read(N),
+    readList(N, List),
+    read(K), 
+    tell('C:/Users/scdco/Documents/Prolog/prolog/LR_14Files/outFile6.txt'),
+    write(List), nl, write(" K = "), write(K), nl, nl, nl, nl,
+    write("Размещения с повторениями из N по K: "), nl, nl,
+    aRepWrite(List, K), nl, nl, nl,
+    write("Перестановки из N: "), nl, nl,
+    pWrite(List), nl, nl, nl,
+    write("Размещения из N по K: "), nl, nl,
+    aWrite(List, K), nl, nl, nl,
+    write("Подмножества: "), nl, nl,
+    subSetWrite(List), nl, nl, nl,
+    write("Сочетания из N по K: "), nl, nl,
+    cWrite(List, K), nl, nl, nl,
+    write("Сочетания с повторениями из N по K: "), nl, nl,
+    cRepWrite(List, K), nl, nl, nl,
+    told.
+
+readList(0, []) :- !.
+readList(I, [X|T]) :- read(X), I1 is I - 1, readList(I1, T).
+
+
+
+% 6.1 - Размещения из N по K с повторениями
+
+aRepWrite(List, K) :- 
+    not(aRepWriteInternal(List, K)).
+
+aRepWriteInternal(List, K) :- 
+    aRep(List, K, A), 
+    write(A), nl, fail.
+
+aRep(List, K, Ans) :- 
+    aRep(List, K, [], Ans).
+
+aRep(List, K, CurList, Ans) :-
+    K > 0, 
+    inList(List, X), 
+    NewK is K - 1,
+    aRep(List, NewK, [X|CurList], Ans). 
+
+aRep(_, 0, Ans, Ans) :- !.
+
+
+
+% 6.2 Перестановки из N
+
+pWrite(List) :-
+    count(List, K),
+    aWrite(List, K).
+
+p(List, Ans) :-
+    count(List, K),
+    a(List, K, Ans).
+
+
+
+% 6.3 Размещения из N по K
+
+inListNoRep([H|T],H,T).
+inListNoRep([H|T],Elem,[H|Tail]):-inListNoRep(T,Elem,Tail).
+
+
+
+aWrite(List, K) :-
+    not(aWriteInternal(List, K)).
+
+aWriteInternal(List, K) :- 
+    a(List, K, A), 
+    write(A), nl, fail.
+
+a(List, K, Ans) :- 
+    a(List, K, [], Ans).
+
+a(List, K, CurPerm, Ans) :-
+    K > 0,
+    inListNoRep(List, X, NewList), 
+    NewK is K - 1, 
+    a(NewList, NewK, [X|CurPerm], Ans).
+
+a(_, 0, Ans, Ans) :- !.
+
+
+
+% 6.4 Подмножества
+
+subSetWrite(List) :-
+    not(subSetWriteInternal(List)).
+
+subSetWriteInternal(List) :- 
+    subSet(List, SubSet), 
+    write(SubSet), nl, fail.
+
+subSet([Elem|SetTail], [Elem|SubSetTail]) :- 
+    subSet(SetTail, SubSetTail).
+
+subSet([_|SetTail], SubSet) :- 
+    subSet(SetTail, SubSet).
+
+subSet([], []).
+
+
+
+% 6.5 Сочетания из N по K
+
+cWrite(List, K) :-
+    not(cWriteInternal(List, K)).
+
+cWriteInternal(List, K) :-
+    c(List, K, C), 
+    write(C), nl, fail.
+
+c(_, 0, []) :- !.
+
+c([Elem|SetTail], K, [Elem|SubSetTail]) :- 
+    NewK is K-1, 
+    c(SetTail, NewK, SubSetTail).
+
+c([_|SetTail], K, SubSet) :- 
+    c(SetTail, K, SubSet).
+
+
+
+% 6.6 Сочетания с повторениями из N по K
+
+cRepWrite(List, K) :-
+    not(cRepWriteInternal(List, K)).
+
+cRepWriteInternal(List, K) :-
+    cRep(List, K, C), 
+    write(C), nl, fail.
+
+cRep(_, 0, []) :- !.
+
+cRep([Elem|SetTail], K, [Elem|SubSetTail]) :- 
+    NewK is K-1, 
+    cRep([Elem|SetTail], NewK, SubSetTail).
+
+cRep([_|SetTail], K, SubSet) :- 
+    cRep(SetTail, K, SubSet).
+
+
